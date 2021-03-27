@@ -12,6 +12,7 @@ class Todo(db.Model):
     __tablename__ = "todolist"
     id = db.Column(db.Integer, primary_key=True)
     content = db.Column(db.String(200), nullable=False)
+    comp = db.Column(db.String(200), nullable=False)
     
 # db.create_all()
 
@@ -25,7 +26,8 @@ def add():
     if request.method == 'POST':
         print(request.form.get('item'))
         new_item = Todo(
-            content = request.form['item']
+            content = request.form['item'],
+            comp = ""
         )
         db.session.add(new_item)
         db.session.commit()
@@ -38,6 +40,20 @@ def delete():
         print(a)
         todo = Todo.query.filter_by(content=a).first()
         db.session.delete(todo)
+        db.session.commit()
+    return redirect(url_for("get_all_posts"))
+
+@app.route('/complete', methods=["GET", "POST"])
+def complete():
+    if request.method == 'POST':
+        a = request.form['keyword']
+        print(a)
+        todo = Todo.query.filter_by(content=a).first()
+        if todo.comp == "completed":
+            todo.comp = ""
+        elif todo.comp == "":
+            todo.comp = "completed"
+        # db.session.delete(todo)
         db.session.commit()
     return redirect(url_for("get_all_posts"))
 

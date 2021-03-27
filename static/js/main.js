@@ -1,6 +1,17 @@
 $(document).ready(function(){
 
     $("ul").on("click", "li", function(){
+
+        var search_word = $(this).text();
+        var qurl="http://127.0.0.1:5000/complete";
+        $.ajax({
+            type: "POST",
+            cache: false,
+            data:{keyword:search_word},
+            url: qurl,
+            dataType: "json"
+        })
+
     $(this).toggleClass("completed");
     });
     

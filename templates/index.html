@@ -25,7 +25,7 @@
         </form>
         <ul>
             {% for post in all_posts %}
-            <li id={{post.id}}><span><i class="fa fa-trash"></i></span>{{ post.content }}</li>
+            <li id={{ post.id }} class={{ post.comp }}><span><i class="fa fa-trash"></i></span>{{ post.content }}</li>
             {% endfor %}
         </ul>
     </div>
